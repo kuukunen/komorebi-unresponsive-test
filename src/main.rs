@@ -55,9 +55,19 @@ extern "system" fn wndproc(hwnd: HWND, message: u32, wparam: WPARAM, lparam: LPA
                 PostQuitMessage(0);
                 LRESULT(0)
             }
-            WM_WINDOWPOSCHANGING | WM_MOVING | WM_SIZING => {
-                println!("Window is being moved/resized - sleeping for 1 second");
-                sleep(Duration::from_secs(1));
+            WM_WINDOWPOSCHANGING => {
+                println!("WM_WINDOWPOSCHANGING received - sleeping for 2 seconds");
+                sleep(Duration::from_secs(2));
+                DefWindowProcA(hwnd, message, wparam, lparam)
+            }
+            WM_MOVING => {
+                println!("WM_MOVING received - sleeping for 2 seconds");
+                sleep(Duration::from_secs(2));
+                DefWindowProcA(hwnd, message, wparam, lparam)
+            }
+            WM_SIZING => {
+                println!("WM_SIZING received - sleeping for 2 seconds");
+                sleep(Duration::from_secs(2));
                 DefWindowProcA(hwnd, message, wparam, lparam)
             }
             WM_PAINT => {
